@@ -1,0 +1,20 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // "type": "msedge",
+      // "file": "/Users/liuduwei/coding/person/typescript-course/typescript-basic/index.html"
+      "request": "launch",
+      "name": "debug",
+      // "port": 9422,
+      "url": "http://127.0.0.1:3000",
+      // "urlFilter": "http://localhost:7777/*",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "trace": true
+    }
+  ]
+}

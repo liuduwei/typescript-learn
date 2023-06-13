@@ -7,13 +7,13 @@ const person: {
   name: string;
   age: 30;
   hobbies: string[];
-  role: Role.ADMIN;
+  role: Role;
   // role: [number, string];
 } = {
   name: "liud",
   age: 30,
   hobbies: ["swimming", "backetball"],
-  // role: [2, "admin"],
+  role: 2,
 }; //object
 let favoriteActivities: string[];
 favoriteActivities = ["bass", "norris"];

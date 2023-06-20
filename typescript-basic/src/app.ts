@@ -1,67 +1,25 @@
-abstract class Living {
-  constructor(private is_live: boolean, protected Species: string) {}
-
-  fn(): number {
-    return 1;
-  }
-
-  abstract fn2(): string;
+interface Student {
+  school: string;
 }
-class Person extends Living {
-  static profile: string;
-  private static instance: Person;
 
-  private _gender: string;
+interface Teenagers {
+  age: number;
+}
 
-  public get gender(): string {
-    return this._gender;
+type Teenagers_student = Student & Teenagers;
+
+function iAm(person: Teenagers_student): void {
+  if ("school" in person) {
+    console.log(person.school);
   }
-  public set gender(value: string) {
-    this._gender = value;
-  }
-  public age: number;
-
-  private constructor(
-    private readonly name: string,
-    age: number,
-    gender: string
-  ) {
-    Person.profile = "dfe";
-    super(true, "people");
-    this.age = age;
-    this._gender = gender;
-    // this.age = age;
-  }
-
-  static getInstance(name: string, age: number, gender: string): Person {
-    if (this.instance) {
-      return Person.instance;
-    }
-    Person.instance = new Person(name, age, gender);
-    return Person.instance;
-  }
-
-  fn2() {
-    return "cao";
-  }
-
-  get getGender() {
-    if (this.gender) {
-      return this.gender;
-    }
-  }
-
-  changeName(name: string) {
-    // this.name = name;
+  if ("age" in person) {
+    console.log(person.age);
   }
 }
 
-const liu = Person.getInstance("liuduwei", 21, "male");
-const tong = Person.getInstance("tongqing", 22, "female");
+const liuduwei: Teenagers_student = {
+  school: "uestc",
+  age: 22,
+};
 
-console.log(liu);
-console.log(tong);
-
-// const liuduwei = new Person("liuduwei", 12);
-
-// console.log(liuduwei);
+iAm(liuduwei);

@@ -2,6 +2,6 @@
 function fn1(a, cb, cb2) {
     return "dfe";
 }
-var fn;
-fn1(1, function () { return 2; }, function () { return "dfe"; });
+let fn;
+fn1(1, () => 2, () => "dfe");
 //# sourceMappingURL=function.js.map

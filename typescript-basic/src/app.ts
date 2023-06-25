@@ -1,86 +1,115 @@
-// build in generc types
-const strArray: string[] = ["1"];
-const strArray2: Array<string> = ["12"];
-
-const promise: Promise<string> = new Promise((reslove) => {
-  setTimeout(() => reslove("100"), 100);
-});
-
-promise.then((data) => {
-  data.split("");
-});
-
-// generic function
-
-function merge12<T extends object, U extends object>(objA: T, objB: U) {
-  return Object.assign(objA, objB);
+function Logger(info: string): Function {
+  console.log(info);
+  return function Logger1(constructor: Function) {
+    console.log(constructor);
+  };
 }
 
-const A = merge12({ name: "123" }, { age: 3 });
-A.age;
-
-// generic constraint
-interface lengthy {
-  length: number;
+// property decorator
+function LogProperty(target: any, propertyName: string | symbol) {
+  console.log("target", target);
+  console.log("prop", propertyName);
 }
 
-function countLetter<T extends lengthy>(element: T) {
-  console.log(element);
+// access decorator, method decorator
+function LogFunction(
+  target: any,
+  name: string | symbol,
+  descriptor: PropertyDescriptor
+) {
+  console.log("target", target);
+  console.log("prop", name);
+  console.log("des", descriptor);
 }
 
-// keyof restrict
-
-function extractValue<T extends object, U extends keyof T>(obj1: T, key: U) {
-  return obj1[key];
+// paramater decorator
+function LogParameter(target: any, name: string, position: number) {
+  console.log(target);
+  console.log(name);
+  console.log(position);
 }
 
-extractValue({ name: "dfe" }, "name");
+// more useful decorator
+function AddTemplate(template: string, selector: string) {
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(..._: any) {
+        super();
+        console.log(_);
+        console.log("rendering templete");
+        const el = document.querySelector(selector);
+        if (el) {
+          el.innerHTML = this.name;
+        }
+      }
+    };
+  };
+}
 
-// generic class
+//decorator with class
+// @Logger("dfe")
+@AddTemplate("caonima", "h1")
+class Personn {
+  @LogProperty //before property
+  public name = "max";
+  @LogProperty
+  public name2 = "max";
+  public name3 = "max";
 
-class repo<T> {
-  private data: T[];
-
+  @LogFunction
+  set setName(@LogParameter name: string) {
+    this.name = name;
+  }
   constructor() {
-    this.data = [];
-  }
-
-  addItem(item: T) {
-    this.data.push(item);
-  }
-
-  removeItem(item: T) {
-    this.data.splice(this.data.indexOf(item), 1);
-  }
-
-  getItems() {
-    return [...this.data];
+    // console.log("constructor");
   }
 }
 
-const objectRepo = new repo<Object>();
-objectRepo.addItem({ name: "tongtong" });
-objectRepo.addItem({ name: "liuduwei" });
+// autobind
 
-objectRepo.removeItem({ name: "tongtong" });
-console.log(objectRepo);
-
-const stringRepo = new repo<string>();
-stringRepo.addItem("2");
-stringRepo.addItem("是");
-
-console.log(stringRepo);
-
-// generics utility
-
-interface courseGoal {
-  title: string;
-  description: string;
+function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
 }
 
-function createCourseGoal(title: string, description: string): courseGoal {
-  const courseGoal: Partial<courseGoal> = {}; // is both the same thing ??
-  courseGoal.title = title;
-  courseGoal.description = description;
-  return courseGoal as courseGoal;
+class Printer {
+  public message = "caonima";
+  constructor() {}
+  @Autobind
+  showMessage() {
+    console.log(this.message);
+  }
 }
+
+const p = new Printer();
+
+const btn = document.querySelector("button");
+btn?.addEventListener("click", p.showMessage);
+
+class Course {
+  constructor(public name: any, public price: any) {
+    this.name = name;
+    this.price = price;
+  }
+}
+
+const formEl = document.querySelector("form");
+formEl?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target as HTMLFormElement);
+  const name = formData.get("name");
+  const price = formData.get("price");
+
+  const createCourse = new Course(name, price);
+  console.log(createCourse);
+});

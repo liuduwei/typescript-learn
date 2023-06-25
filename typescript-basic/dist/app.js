@@ -1,61 +1,112 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var strArray = ["1"];
-var strArray2 = ["12"];
-var promise = new Promise(function (reslove) {
-    setTimeout(function () { return reslove("100"); }, 100);
-});
-promise.then(function (data) {
-    data.split("");
-});
-function merge12(objA, objB) {
-    return Object.assign(objA, objB);
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+function Logger(info) {
+    console.log(info);
+    return function Logger1(constructor) {
+        console.log(constructor);
+    };
 }
-var A = merge12({ name: "123" }, { age: 3 });
-A.age;
-function countLetter(element) {
-    console.log(element);
+function LogProperty(target, propertyName) {
+    console.log("target", target);
+    console.log("prop", propertyName);
 }
-function extractValue(obj1, key) {
-    return obj1[key];
+function LogFunction(target, name, descriptor) {
+    console.log("target", target);
+    console.log("prop", name);
+    console.log("des", descriptor);
 }
-extractValue({ name: "dfe" }, "name");
-var repo = (function () {
-    function repo() {
-        this.data = [];
+function LogParameter(target, name, position) {
+    console.log(target);
+    console.log(name);
+    console.log(position);
+}
+function AddTemplate(template, selector) {
+    return function (originalConstructor) {
+        return class extends originalConstructor {
+            constructor(..._) {
+                super();
+                console.log(_);
+                console.log("rendering templete");
+                const el = document.querySelector(selector);
+                if (el) {
+                    el.innerHTML = this.name;
+                }
+            }
+        };
+    };
+}
+let Personn = class Personn {
+    set setName(name) {
+        this.name = name;
     }
-    repo.prototype.addItem = function (item) {
-        this.data.push(item);
+    constructor() {
+        this.name = "max";
+        this.name2 = "max";
+        this.name3 = "max";
+    }
+};
+__decorate([
+    LogProperty
+], Personn.prototype, "name", void 0);
+__decorate([
+    LogProperty
+], Personn.prototype, "name2", void 0);
+__decorate([
+    LogFunction,
+    __param(0, LogParameter)
+], Personn.prototype, "setName", null);
+Personn = __decorate([
+    AddTemplate("caonima", "h1")
+], Personn);
+function Autobind(_, _2, descriptor) {
+    const originalMethod = descriptor.value;
+    const adjDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        },
     };
-    repo.prototype.removeItem = function (item) {
-        this.data.splice(this.data.indexOf(item), 1);
-    };
-    repo.prototype.getItems = function () {
-        return __spreadArray([], this.data, true);
-    };
-    return repo;
-}());
-var objectRepo = new repo();
-objectRepo.addItem({ name: "tongtong" });
-objectRepo.addItem({ name: "liuduwei" });
-objectRepo.removeItem({ name: "tongtong" });
-console.log(objectRepo);
-var stringRepo = new repo();
-stringRepo.addItem("2");
-stringRepo.addItem("是");
-console.log(stringRepo);
-function createCourseGoal(title, description) {
-    var courseGoal = {};
-    courseGoal.title = title;
-    courseGoal.description = description;
-    return courseGoal;
+    return adjDescriptor;
 }
+class Printer {
+    constructor() {
+        this.message = "caonima";
+    }
+    showMessage() {
+        console.log(this.message);
+    }
+}
+__decorate([
+    Autobind
+], Printer.prototype, "showMessage", null);
+const p = new Printer();
+const btn = document.querySelector("button");
+btn === null || btn === void 0 ? void 0 : btn.addEventListener("click", p.showMessage);
+class Course {
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+        this.name = name;
+        this.price = price;
+    }
+}
+const formEl = document.querySelector("form");
+formEl === null || formEl === void 0 ? void 0 : formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const name = formData.get("name");
+    const price = formData.get("price");
+    const createCourse = new Course(name, price);
+    console.log(createCourse);
+});
 //# sourceMappingURL=app.js.map

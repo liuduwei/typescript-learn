@@ -1,6 +1,6 @@
 "use strict";
-var a;
-var b;
+let a;
+let b;
 a = 1;
 function generateError(e) {
     throw e;

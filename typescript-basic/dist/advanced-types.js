@@ -7,18 +7,18 @@ function iAm2(person) {
             console.log("im a teenagers");
     }
 }
-var tongtong = {
+const tongtong = {
     type: "Teenagers",
     age: 2,
 };
 iAm2(tongtong);
-var h1 = document.querySelector("h1");
+const h1 = document.querySelector("h1");
 console.log(h1);
-var input = document.getElementById("input");
+const input = document.getElementById("input");
 console.log(input);
-var value = input.value;
+const value = input.value;
 console.log(value);
-var c = {
+const c = {
     id: 2,
 };
 //# sourceMappingURL=advanced-types.js.map

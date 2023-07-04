@@ -92,14 +92,30 @@ __decorate([
 const p = new Printer();
 const btn = document.querySelector("button");
 btn === null || btn === void 0 ? void 0 : btn.addEventListener("click", p.showMessage);
+const registerValidate = {};
+function Required(target, name) {
+    registerValidate[target.constructor.name] = Object.assign(Object.assign({}, registerValidate[target.constructor.name]), { name: ["required"] });
+}
+function Positive(target, name) {
+    registerValidate[target.constructor.name] = Object.assign(Object.assign({}, registerValidate[target.constructor.name]), { name: ["positive"] });
+}
+function validator(name) {
+    if (registerValidate[name]) {
+        return;
+    }
+}
 class Course {
     constructor(name, price) {
         this.name = name;
         this.price = price;
-        this.name = name;
-        this.price = price;
     }
 }
+__decorate([
+    Required
+], Course.prototype, "name", void 0);
+__decorate([
+    Positive
+], Course.prototype, "price", void 0);
 const formEl = document.querySelector("form");
 formEl === null || formEl === void 0 ? void 0 : formEl.addEventListener("submit", (e) => {
     e.preventDefault();

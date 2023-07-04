@@ -96,8 +96,40 @@ const p = new Printer();
 const btn = document.querySelector("button");
 btn?.addEventListener("click", p.showMessage);
 
+interface validateRules {
+  [property: string]: {
+    [props: string]: string[]; //['required', 'positive']
+  };
+}
+
+const registerValidate: validateRules = {};
+
+function Required(target: any, name: string) {
+  registerValidate[target.constructor.name] = {
+    ...registerValidate[target.constructor.name],
+    name: ["required"],
+  };
+}
+
+function Positive(target: any, name: string) {
+  registerValidate[target.constructor.name] = {
+    ...registerValidate[target.constructor.name],
+    name: ["positive"],
+  };
+}
+
+function validator(name) {
+  if (registerValidate[name]) {
+    return;
+  }
+  // for (const )
+}
 class Course {
-  constructor(public name: any, public price: any) {
+  @Required
+  public name;
+  @Positive
+  public price;
+  constructor(name: string, price: number) {
     this.name = name;
     this.price = price;
   }

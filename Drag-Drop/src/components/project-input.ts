@@ -1,6 +1,7 @@
 import Autobind from "../decorators/autobind";
 import projectState from "../state/project-state";
 import { validate } from "../util/validation";
+import Component from "./base-components";
 
 export default class ProjectInput extends Component<
   HTMLDivElement,

@@ -1,6 +1,8 @@
 import Autobind from "../decorators/autobind";
+import { DragTarget } from "../models/darg-drop";
 import { ProjectDescriptor, projectStatus } from "../models/project";
 import projectState from "../state/project-state";
+import Component from "./base-components";
 import ProjectItem from "./project-item";
 
 export default class ProjectList

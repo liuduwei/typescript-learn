@@ -1,5 +1,7 @@
 import Autobind from "../decorators/autobind";
+import { Dragable } from "../models/darg-drop";
 import { ProjectDescriptor } from "../models/project";
+import Component from "./base-components";
 
 export default class ProjectItem
   extends Component<HTMLUListElement, HTMLLIElement>

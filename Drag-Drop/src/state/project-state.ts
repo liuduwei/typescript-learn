@@ -1,4 +1,4 @@
-import { ProjectStateListener,ProjectDescriptor } from "../models/project";
+import { ProjectStateListener, ProjectDescriptor } from "../models/project";
 import { projectStatus } from "../models/project";
 
 class State<T> {
@@ -55,4 +55,4 @@ class ProjectState extends State<ProjectDescriptor> {
   }
 }
 
-export default const projectState = <ProjectState>ProjectState.getInstance();
+export default <ProjectState>ProjectState.getInstance();

@@ -1,4 +1,7 @@
-abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+export default abstract class Component<
+  T extends HTMLElement,
+  U extends HTMLElement
+> {
   protected templete: HTMLTemplateElement;
   private hostElement: T;
   protected element: U;

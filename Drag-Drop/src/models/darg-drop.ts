@@ -1,14 +1,14 @@
-interface Dragable {
+export interface Dragable {
   dragStartHandler(e: DragEvent): void;
   dragEndHandler(e: DragEvent): void;
 }
 
-interface DragTarget {
+export interface DragTarget {
   dragLeaveHandler(e: DragEvent): void;
   dragOverHandler(e: DragEvent): void;
   dropHandler(e: DragEvent): void;
 }
 
-interface Dropable {
+export interface Dropable {
   dropHandler(e: DragEvent): void;
 }
